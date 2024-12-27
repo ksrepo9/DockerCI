@@ -1,0 +1,35 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name : dp4
+  labels :
+    env : prod
+spec :
+  replicas : 10
+  template :
+    metadata :
+      name : pod1
+      labels :
+        env : prod
+    spec :
+      containers :
+      - name : c2
+        image :  ksazure.azurecr.io/ksrepodockerci:104
+  selector :
+    matchLabels:
+      env : prod
+
+---
+apiVersion : v1
+kind : Service
+metadata :
+  name : svc4
+  labels :
+    env : prod 
+spec :
+  ports :
+  - port : 80
+    targetPort : 80
+  selector :
+    env : prod
+  type : LoadBalancer
